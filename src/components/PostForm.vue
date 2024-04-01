@@ -2,20 +2,20 @@
   <div>
     <form @submit.prevent="emitCreatePost">
       <h4>Создание поста</h4>
-      <input
-        v-model="title"
-        class="input"
+      <MyInput
+        v-model="post.title"
         type="text"
         placeholder="Введите название поста"
       />
-      <input
-        v-model="body"
-        class="input"
+      <MyInput
+        v-model="post.body"
         type="text"
         placeholder="Введите описание поста"
       />
 
-      <button class="btn">Добавить пост</button>
+      <MyButton class="btn" style="align-self: flex-end; margin-top: 15px"
+        >Добавить пост</MyButton
+      >
     </form>
   </div>
 </template>
@@ -24,17 +24,21 @@
 export default {
   data() {
     return {
-      title: "",
-      body: "",
+      post: {
+        title: "",
+        body: "",
+      },
     };
   },
   methods: {
     emitCreatePost() {
-      if (this.title && this.body) {
-        // Добавлена простая проверка на пустые поля
-        this.$emit("createPost", { title: this.title, body: this.body });
-        this.title = "";
-        this.body = "";
+      if (this.post.title && this.post.body) {
+        this.$emit("createPost", {
+          title: this.post.title,
+          body: this.post.body,
+        });
+        this.post.title = "";
+        this.post.body = "";
       }
     },
   },
@@ -42,22 +46,8 @@ export default {
 </script>
 
 <style scoped>
-.input {
-  width: 100%;
-  border: 1px solid teal;
-  padding: 10px 15px;
-  margin-top: 15px;
-}
 form {
   display: flex;
   flex-direction: column;
-}
-.btn {
-  margin-top: 15px;
-  align-self: flex-end;
-  padding: 10px 15px;
-  background: none;
-  color: teal;
-  border: 1px solid teal;
 }
 </style>
